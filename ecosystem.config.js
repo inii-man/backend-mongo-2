@@ -6,7 +6,7 @@ module.exports = {
     script: './app.js',
     // Fitur 'watch' akan otomatis merestart server jika ada perubahan file (berguna untuk development)
     watch: '.',
-    // Abaikan perubahan di folder 'views' dan 'node_modules' agar tidak bolak-balik restart
-    ignore_watch: ['views', 'node_modules'],
+    // Abaikan perubahan di folder 'views', 'node_modules', dan '.git' agar tidak bolak-balik restart
+    ignore_watch: ['views', 'node_modules', '.git'],
   }],
 };
