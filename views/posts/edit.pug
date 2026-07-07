@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+  // Mengatur URL action form:
+  // Jika 'post' ada (mode edit), arahkan form ke route POST /posts/shortId
+  // Jika 'post' tidak ada (mode buat baru), arahkan ke route POST /posts
+  - var actionUrl = post ? `/posts/${post.shortId}` : "/posts"
+  
+  // Mengatur Judul Halaman
+  h2= post ? "✏️ Edit Postingan" : "➕ Buat Postingan Baru"
+
+  // Form HTML
+  form(action=actionUrl, method="POST")
+    .form-group
+      label(for="title") Judul
+      // Mengisi value jika sedang dalam mode edit (post.title)
+      input#title(type="text" name="title" required value=(post && post.title) placeholder="Masukkan judul...")
+    
+    .form-group
+      label(for="author") Penulis
+      input#author(type="text" name="author" value=(post && post.author) placeholder="Nama Anda (opsional)")
+    
+    .form-group
+      label(for="content") Isi Konten
+      // Untuk textarea, valuenya diisi di antara tag, bukan di atribut 'value'
+      textarea#content(name="content" rows="10" required placeholder="Tulis sesuatu di sini...")= (post && post.content)
+    
+    div
+      // Mengubah tulisan tombol tergantung mode (Edit atau Simpan)
+      - var buttonText = post ? "Simpan Perubahan" : "Buat Postingan"
+      button.btn(type="submit")= buttonText
+      
+      a.btn(href="/posts" style="margin-left: 10px; background: #95a5a6;") 🔙 Batal

@@ -1,0 +1,71 @@
+doctype html
+html
+  head
+    title Bulletin Board Playground
+    // Menambahkan font dan sedikit gaya CSS bawaan agar tampilannya rapi
+    style.
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f7f6;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 80%;
+        margin: 40px auto;
+        background: #fff;
+        padding: 30px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border-radius: 8px;
+      }
+      h1 { color: #2c3e50; }
+      a { color: #3498db; text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .btn {
+        display: inline-block;
+        background: #3498db;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .btn:hover { background: #2980b9; text-decoration: none; }
+      .btn-danger { background: #e74c3c; }
+      .btn-danger:hover { background: #c0392b; }
+      table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+      th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
+      th { background-color: #f8f9fa; }
+      .form-group { margin-bottom: 15px; }
+      .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+      .form-group input, .form-group textarea {
+        width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
+      }
+      .pagination { margin-top: 20px; text-align: center; }
+      .pagination a, .pagination span { margin: 0 5px; padding: 5px 10px; background: #eee; border-radius: 3px; }
+      .pagination .active { background: #3498db; color: #fff; }
+
+    // Mixin (fungsi) untuk menampilkan navigasi paginasi (halaman 1, 2, 3...)
+    mixin pagination(path)
+      .pagination
+        // Looping dari halaman 1 sampai total halaman
+        - for(let i = 1; i <= totalPage; i++)
+            // Jika halaman yang diloop sama dengan halaman saat ini, berikan style 'active'
+            if i == page
+              span.active= i
+            else
+              // Jika bukan halaman saat ini, buat link ke halaman tersebut
+              a(href=`${path}?page=${i}&perPage=${perPage}`)= i
+
+  body
+    .container
+      // Judul aplikasi yang bisa diklik untuk kembali ke halaman utama
+      h1
+        a(href="/posts" style="color: inherit; text-decoration: none;") 📋 Bulletin Board
+      hr
+      
+      // Bagian ini (block content) akan diganti oleh template lain yang menggunakan (extends) layout ini
+      block content

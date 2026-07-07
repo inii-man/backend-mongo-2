@@ -1,0 +1,35 @@
+extends ../layout
+//- Menggunakan (extends) layout.pug sebagai kerangka dasar
+
+block content
+  div(style="display: flex; justify-content: space-between; align-items: center;")
+    h2 Daftar Postingan
+    // Tombol untuk membuat postingan baru (mengirim parameter ?write=true ke URL)
+    a.btn(href="/posts?write=true") ➕ Buat Postingan
+
+  // Menampilkan data dalam bentuk tabel
+  table
+    thead
+      tr
+        th Judul
+        th Penulis
+        th Waktu Dibuat
+    tbody
+      // Looping setiap 'post' dari variabel 'posts' yang dikirim dari server
+      each post in posts
+        tr
+          td
+            // Link ke halaman detail postingan berdasarkan shortId
+            a(href=`/posts/${post.shortId}`)= post.title
+          td= post.author
+          // Menampilkan tanggal yang sudah diformat menggunakan fungsi formatDate (dari app.locals)
+          td= formatDate(post.createdAt)
+      
+      // Jika data posts kosong, tampilkan pesan ini
+      if posts.length === 0
+        tr
+          td(colspan="3" style="text-align: center; color: #888;") Belum ada postingan. Jadilah yang pertama!
+
+  // Memanggil fungsi mixin pagination dari layout.pug dan mengirimkan path '/posts'
+  if totalPage > 1
+    +pagination("/posts")

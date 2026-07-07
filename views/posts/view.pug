@@ -1,0 +1,56 @@
+extends ../layout
+
+block content
+  h2 Detail Postingan
+  
+  table
+    tbody
+      tr
+        th(style="width: 20%;") Judul
+        td= post.title
+      tr
+        th Penulis
+        td= post.author
+      tr
+        th Dibuat Pada
+        td= formatDate(post.createdAt)
+      tr
+        th Terakhir Diubah
+        td= formatDate(post.updatedAt)
+      tr
+        th Isi Postingan
+        td
+          // pre mempertahankan format teks (baris baru, spasi)
+          pre(style="white-space: pre-wrap; font-family: inherit;")= post.content
+  
+  div(style="margin-top: 20px;")
+    // Tombol Edit akan mengirim user ke form dengan parameter ?edit=true
+    a.btn(href=`/posts/${post.shortId}?edit=true` style="margin-right: 10px;") ✏️ Edit
+    
+    // Tombol Delete memanggil fungsi Javascript deletePost()
+    button.btn.btn-danger(onclick=`deletePost("${post.shortId}")`) 🗑️ Hapus
+    
+    a.btn(href="/posts" style="margin-left: 10px; background: #95a5a6;") 🔙 Kembali
+
+  // Javascript untuk mengirim request DELETE (karena HTML form biasa tidak bisa mengirim DELETE)
+  script(type="text/javascript").
+    function deletePost(shortId) {
+      // Konfirmasi sebelum menghapus
+      if (confirm('Apakah Anda yakin ingin menghapus postingan ini?')) {
+        // Menggunakan fetch API untuk mengirim HTTP DELETE request
+        fetch('/posts/' + shortId, { method: 'DELETE' })
+          .then((res) => {
+            if (res.ok) {
+              alert('Postingan berhasil dihapus.');
+              window.location.href = '/posts'; // Redirect ke daftar post jika berhasil
+            } else {
+              alert('Terjadi kesalahan saat menghapus.');
+              console.log(res.statusText);
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+            alert('Terjadi kesalahan pada jaringan.');
+          });
+      }
+    }

@@ -1,0 +1,19 @@
+{
+  "name": "backend-mongo-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dayjs": "^1.11.21",
+    "express": "^5.2.1",
+    "mongoose": "^9.7.4",
+    "nanoid": "^3.3.15",
+    "pug": "^3.0.4"
+  }
+}
